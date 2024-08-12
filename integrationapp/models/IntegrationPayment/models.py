@@ -19,7 +19,7 @@ class IntegrationPaymentsProvider(BaseModel):
     sendNotification = models.BooleanField(False)
     paymentDescription = models.CharField(max_length=500)
     totalPaid = models.FloatField()
-    providerName = models.CharField(max_length=200)
+    providerName = models.CharField(max_length=200, default="Nombre Proveedor")
     status = models.CharField(
         max_length=8,
         default="PENDING",

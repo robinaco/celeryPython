@@ -14,22 +14,33 @@ class IntegrationPayApiWeb(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request, *args, **kwargs):
-
+        datapayload = request.data
         serializer = IntegrationSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
         service = IntegrationPayService(serializer.validated_data)
-        obj = service.save_data()
-  
-        if obj:
+        object = service.save_data()
+        if object:
             auth_eva = service.auth_eva_api()
             #upload = request.data
             #task = upload_payload.delay(upload)
-            return Response(
-                #{'task_id': task.id},
-                {'Body': "Information Proccess"},
-                status=status.HTTP_202_ACCEPTED
-            )
+            if auth_eva:
+                cookiestring = str(auth_eva[0])
+                save_payload_eva = service.save_payload_eva(datapayload,
+                                                            cookiestring
+                                                            )
+                if save_payload_eva.status == 200:
+                    return Response(
+                        #{'task_id': task.id},
+                        {'Body': save_payload_eva},
+                        status=status.HTTP_200_OK
+                    )
+                else:
+                    return Response(
+                        #{'task_id': task.id},
+                        {'Body': save_payload_eva},
+                        status=status.HTTP_400_BAD_REQUEST
+                    )
 
 
 # class TaskStatusView(APIView):

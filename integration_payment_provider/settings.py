@@ -26,7 +26,7 @@ SECRET_KEY = "django-insecure-rj+1iw$cvym2iq72hy*c1trplzt9n!7z$e!avwvs9v__d+@xr*
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -95,25 +95,9 @@ DATABASES = {
         'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
         'HOST': os.getenv('POSTGRES_HOST'),
         'PORT': os.getenv('POSTGRES_PORT'),
-        
-        
-        # 'NAME': 'db_payments',
-        # 'USER': 'test_eva_remote',
-        # 'PASSWORD': '8uyHPWTJmJ9NUrws',
-        # 'HOST': '172.104.199.86',
-        # 'PORT': '9936',
     }
 }
-# DATABASES = {
-#     'default': {
-#         'ENGINE': "django.db.backends.postgresql",
-#         'NAME': os.getenv('POSTGRES_DB'),
-#         'USER': os.getenv('POSTGRES_USER'),
-#         'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
-#         'HOST': os.getenv('POSTGRES_HOST'),
-#         'PORT': os.getenv('POSTGRES_PORT'),
-#     }
-# }
+
 # DATABASES = {
 #     "default": {
 #         "ENGINE": "django.db.backends.sqlite3",

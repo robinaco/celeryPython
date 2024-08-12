@@ -1,5 +1,9 @@
 from integrationapp.models.IntegrationPayment.models import IntegrationPaymentsProvider
 import json
+import requests
+from integrationapp.constants import (EVA__LOGIN_URL,
+                                      HEADERS_LOGIN,
+                                      DATA_ACCESS_LOGIN)
 
 
 class IntegrationPayService:
@@ -31,3 +35,20 @@ class IntegrationPayService:
             payload=payload,
         )
         return obj
+
+    def auth_eva_api(self):
+        
+        url = EVA__LOGIN_URL
+        headers = HEADERS_LOGIN
+        data = DATA_ACCESS_LOGIN 
+        response = requests.post(url, data=data,
+                                 headers=headers,
+                                 )
+        headersresponse = response.headers
+        cookies = response.text
+        print(headersresponse)
+        print(cookies) 
+           
+        return headersresponse
+
+    

@@ -10,7 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
-#import os
+import os
 from pathlib import Path
 from celery.schedules import crontab
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -90,11 +90,18 @@ WSGI_APPLICATION = "integration_payment_provider.wsgi.application"
 DATABASES = {
     'default': {
         'ENGINE': "django.db.backends.postgresql",
-        'NAME': 'db_payments',
-        'USER': 'test_eva_remote',
-        'PASSWORD': '8uyHPWTJmJ9NUrws',
-        'HOST': '172.104.199.86',
-        'PORT': '9936',
+        'NAME': os.getenv('POSTGRES_DB'),
+        'USER': os.getenv('POSTGRES_USER'),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
+        'HOST': os.getenv('POSTGRES_HOST'),
+        'PORT': os.getenv('POSTGRES_PORT'),
+        
+        
+        # 'NAME': 'db_payments',
+        # 'USER': 'test_eva_remote',
+        # 'PASSWORD': '8uyHPWTJmJ9NUrws',
+        # 'HOST': '172.104.199.86',
+        # 'PORT': '9936',
     }
 }
 # DATABASES = {
@@ -155,17 +162,17 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-CELERY_BROKER_URL = 'amqp://guest:guest@localhost:5672//'  # Replace with your RabbitMQ URL
-CELERY_RESULT_BACKEND = 'rpc://'
-#CELERY_RESULT_BACKEND = CELERY_BROKER_URL
-CELERY_ACCEPT_CONTENT = ['json']
-CELERY_TASK_SERIALIZER = 'json'
-CELERY_RESULT_SERIALIZER = 'json'
-CELERY_TIMEZONE = 'UTC'
+# CELERY_BROKER_URL = 'amqp://guest:guest@localhost:5672//'  # Replace with your RabbitMQ URL
+# CELERY_RESULT_BACKEND = 'rpc://'
+# #CELERY_RESULT_BACKEND = CELERY_BROKER_URL
+# CELERY_ACCEPT_CONTENT = ['json']
+# CELERY_TASK_SERIALIZER = 'json'
+# CELERY_RESULT_SERIALIZER = 'json'
+# CELERY_TIMEZONE = 'UTC'
 
-CELERY_BEAT_SCHEDULE = {
-    'integrate_eva_api': {
-        'task': 'integrationapp.Tasks.task.consume_queue',
-        'schedule': crontab(minute='*/1'),
-    },
-}
+# CELERY_BEAT_SCHEDULE = {
+#     'integrate_eva_api': {
+#         'task': 'integrationapp.Tasks.task.consume_queue',
+#         'schedule': crontab(minute='*/1'),
+#     },
+# }

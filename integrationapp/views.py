@@ -8,30 +8,23 @@ from integrationapp.services import IntegrationPayService
 # from celery.result import AsyncResult
 from rest_framework.permissions import IsAuthenticated
 # import pika
-from django.http import HttpResponse
-import requests
 
 
 class IntegrationPayApiWeb(APIView):
     permission_classes = [IsAuthenticated]
 
-    def post(self, request):
+    def post(self, request, *args, **kwargs):
 
         serializer = IntegrationSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
         service = IntegrationPayService(serializer.validated_data)
         obj = service.save_data()
+  
         if obj:
+            auth_eva = service.auth_eva_api()
             #upload = request.data
             #task = upload_payload.delay(upload)
-            payload = {'username': 'Pchavez', 'password': 'Eva12345'}
-            response = requests.get(
-                'https://eva.testvaosgroup.com/eva-system/login.jsp', 
-                verify=False, params=payload)
-            #convert reponse data into json
-            users = response.text
-            print(users)
             return Response(
                 #{'task_id': task.id},
                 {'Body': "Information Proccess"},

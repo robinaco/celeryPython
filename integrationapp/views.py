@@ -29,7 +29,8 @@ class IntegrationPayApiWeb(APIView):
                 save_payload_eva = service.save_payload_eva(datapayload,
                                                             cookiestring
                                                             )
-                if save_payload_eva.status == 200:
+                print(f"save_payload_eva : {save_payload_eva}")
+                if Response(save_payload_eva == 200):
                     return Response(
                         #{'task_id': task.id},
                         {'Body': save_payload_eva},

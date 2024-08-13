@@ -45,6 +45,8 @@ class IntegrationPayService:
         response = requests.post(url, json=data,
                                  headers=headers,
                                  )
+        headersito = response.headers.get('Set-Cookie', '')
+        print(headersito)
         headersresponse = response.headers.get('Set-Cookie', '').split(';')
         return headersresponse
 

@@ -12,10 +12,8 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 import os
 from pathlib import Path
-from celery.schedules import crontab
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
@@ -40,7 +38,6 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "rest_framework",
     'rest_framework.authtoken',
-    "django_celery_beat",
     "integrationapp",
 ]
 
@@ -98,14 +95,6 @@ DATABASES = {
     }
 }
 
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "django.db.backends.sqlite3",
-#         "NAME": BASE_DIR / "db.sqlite3",
-#     }
-# }
-
-
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
@@ -146,17 +135,3 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-# CELERY_BROKER_URL = 'amqp://guest:guest@localhost:5672//'  # Replace with your RabbitMQ URL
-# CELERY_RESULT_BACKEND = 'rpc://'
-# #CELERY_RESULT_BACKEND = CELERY_BROKER_URL
-# CELERY_ACCEPT_CONTENT = ['json']
-# CELERY_TASK_SERIALIZER = 'json'
-# CELERY_RESULT_SERIALIZER = 'json'
-# CELERY_TIMEZONE = 'UTC'
-
-# CELERY_BEAT_SCHEDULE = {
-#     'integrate_eva_api': {
-#         'task': 'integrationapp.Tasks.task.consume_queue',
-#         'schedule': crontab(minute='*/1'),
-#     },
-# }

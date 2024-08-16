@@ -7,8 +7,8 @@ class PaymentPeriodsSerializer(serializers.Serializer):
     periodStartDate = serializers.DateField()
     periodEndDate = serializers.DateField()
     paidAmount = serializers.FloatField()
-    
-   
+
+
 class IntegrationSerializer(serializers.ModelSerializer):
     paymentPeriods = PaymentPeriodsSerializer(many=True)
 

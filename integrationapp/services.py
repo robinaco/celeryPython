@@ -51,8 +51,6 @@ class IntegrationPayService:
         )
         if response.status_code == 200:
             return response.headers.get("Set-Cookie", "").split(";")
-        else:
-            return Response(status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     def save_payload_eva(self, payload, cookie):
         HEADERS_PAYMENT["Cookie"] = str(cookie)
@@ -60,17 +58,15 @@ class IntegrationPayService:
                              json=payload,
                              headers=HEADERS_PAYMENT
                              )
-        
-    def update_status(self, payloadid, state):
+
+    def update_status(self, payloadid, state, ideva):
         try:
-            instance = IntegrationPaymentsProvider.objects.get(id=payloadid)
-            print(instance)
+            payment = IntegrationPaymentsProvider.objects.get(id=payloadid)
         except IntegrationPaymentsProvider.DoesNotExist:
             return Response({'error': 'Not found'},
                             status=status.HTTP_404_NOT_FOUND)
-        serializer = IntegrationPaymentsProvider(instance)
-        print(serializer.status)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            payment.status = state.upper()
+            payment.pkintegrationevastatus = ideva
+            payment.save()
+        return Response(payment, status=status.HTTP_200_OK)

@@ -17,14 +17,19 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import include, path
-from rest_framework.authtoken.views import obtain_auth_token
-from integrationapp.views import ProtectedView
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from integrationapp.views import RegisterUserAPIView
 
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/", include("integrationapp.urls")),
-    path('api-token-auth/', obtain_auth_token, name='api_token_auth'),
-    path('api/protected/', ProtectedView.as_view(), name='protected_view'),
+    path('api/token/', TokenObtainPairView.as_view(),
+         name='token_obtain_pair'
+         ),
+    path('api/token/refresh/', TokenRefreshView.as_view(),
+         name='token_refresh'
+         ),
+    path('api/register/', RegisterUserAPIView.as_view(), name='register_user'),
 ]
 

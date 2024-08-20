@@ -7,6 +7,3 @@ urlpatterns = [
     path('payintegration/', views.IntegrationPayApiWeb.as_view(),
          name='payintegration'),
 ]
-
-
-
